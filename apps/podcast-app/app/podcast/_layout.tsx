@@ -6,6 +6,7 @@ export default function PodcastLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ header: () => <AppBar title="Podcast" /> }} />
       <Stack.Screen name="player-screen" options={{ header: () => <AppBar title="Player" /> }} />
+      <Stack.Screen name="podcast-screen" options={{ header: () => <AppBar title="" /> }} />
     </Stack>
   );
 }

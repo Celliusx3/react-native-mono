@@ -6,9 +6,11 @@ import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 
 export default function PodcastScreen() {
   const [searchTerm, setSearchTerm] = useState('dQw4w9WgXcQ');
+  const router = useRouter();
 
   const { data, isFetching, isError, error, refetch } = useYoutube(searchTerm);
 
@@ -37,7 +39,10 @@ export default function PodcastScreen() {
           <FlashList
             data={[data]} // FlashList expects an array
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.podcastItem}>
+              <TouchableOpacity
+                style={styles.podcastItem}
+                onPress={() => router.push({ pathname: "/podcast/podcast-screen", params: { videoDetails: JSON.stringify(item) } })}
+              >
                 <Image source={{ uri: item.videoDetails.thumbnail.thumbnails[0].url }} style={styles.podcastImage} />
                 <ThemedView style={styles.podcastDetails}>
                   <ThemedText type="defaultSemiBold">{item.videoDetails.title}</ThemedText>
