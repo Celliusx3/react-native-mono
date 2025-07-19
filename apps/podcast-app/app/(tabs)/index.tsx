@@ -9,9 +9,9 @@ import { useRouter } from 'expo-router';
 const DATA = [
   { id: '1', title: 'Home', icon: 'house.fill', path: '/' },
   { id: '2', title: 'Send', icon: 'paperplane.fill', path: '/explore' },
-  { id: '3', title: 'Code', icon: 'chevron.left.forwardslash.chevron.right', path: '/youtube' },
-  { id: '4', title: 'Details', icon: 'info.circle.fill', path: '/details' },
-  { id: '5', title: 'Settings', icon: 'gearshape.fill', path: '/settings' },
+  { id: '3', title: 'Details', icon: 'info.circle.fill', path: '/details' },
+  { id: '4', title: 'Settings', icon: 'gearshape.fill', path: '/settings' },
+  { id: '5', title: 'Podcast', icon: 'mic.fill', path: '/podcast' },
 ];
 
 export default function HomeScreen() {

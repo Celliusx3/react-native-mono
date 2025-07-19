@@ -4,7 +4,7 @@ import { useYoutube } from '@/hooks/useYoutube';
 import { useState } from 'react';
 import { ActivityIndicator, Button, ScrollView, StyleSheet, TextInput } from 'react-native';
 
-export default function YouTubeScreen() {
+export default function PodcastScreen() {
   const [videoId, setVideoId] = useState('dQw4w9WgXcQ'); // Default video ID
 
   const { data, isFetching, isError, error, refetch } = useYoutube(videoId);
