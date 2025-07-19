@@ -11,6 +11,7 @@ const DATA = [
   { id: '2', title: 'Send', icon: 'paperplane.fill', path: '/explore' },
   { id: '3', title: 'Code', icon: 'chevron.left.forwardslash.chevron.right', path: '/youtube' },
   { id: '4', title: 'Details', icon: 'info.circle.fill', path: '/details' },
+  { id: '5', title: 'Settings', icon: 'gearshape.fill', path: '/settings' },
 ];
 
 export default function HomeScreen() {
