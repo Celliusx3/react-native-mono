@@ -1,63 +1,93 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import SearchBar from '@/components/SearchBar';
 import { useYoutube } from '@/hooks/useYoutube';
 import { useState } from 'react';
-import { ActivityIndicator, Button, ScrollView, StyleSheet, TextInput } from 'react-native';
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlashList } from "@shopify/flash-list";
+import { Image } from 'expo-image';
 
 export default function PodcastScreen() {
-  const [videoId, setVideoId] = useState('dQw4w9WgXcQ'); // Default video ID
+  const [searchTerm, setSearchTerm] = useState('dQw4w9WgXcQ');
 
-  const { data, isFetching, isError, error, refetch } = useYoutube(videoId);
+  const { data, isFetching, isError, error, refetch } = useYoutube(searchTerm);
+
+  const handleSearch = () => {
+    refetch();
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <ThemedText type="title">Fetch YouTube Data</ThemedText>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter YouTube Video ID"
-        value={videoId}
-        onChangeText={setVideoId}
-      />
-      <Button title="Fetch Video" onPress={() => refetch()} />
+    <ThemedView style={styles.fullScreenContainer}>
+      <View style={styles.searchBarContainer}>
+        <SearchBar
+          placeholder="Find podcasts (enter YouTube ID)"
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+          onSearch={handleSearch}
+        />
+      </View>
 
       {isFetching && <ActivityIndicator style={styles.loader} />}
       {isError && <ThemedText>Error: {error.message}</ThemedText>}
       {data && !isFetching && (
-        <ThemedView style={styles.response}>
-          <ThemedText type="defaultSemiBold">
-            Title: {data.videoDetails.title}
+        <>
+          <ThemedText type="defaultSemiBold" style={styles.topResultsTitle}>
+            Top results
           </ThemedText>
-          <ThemedText>Author: {data.videoDetails.author}</ThemedText>
-          <ThemedText type="defaultSemiBold" style={{ marginTop: 10 }}>
-            Formats:
-          </ThemedText>
-                    {data.streamingData.formats.map((format, index) => (
-            <ThemedText key={index}>
-              - {format.qualityLabel} ({format.mimeType})
-            </ThemedText>
-          ))}
-        </ThemedView>
+          <FlashList
+            data={[data]} // FlashList expects an array
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.podcastItem}>
+                <Image source={{ uri: item.videoDetails.thumbnail.thumbnails[0].url }} style={styles.podcastImage} />
+                <ThemedView style={styles.podcastDetails}>
+                  <ThemedText type="defaultSemiBold">{item.videoDetails.title}</ThemedText>
+                  <ThemedText style={styles.podcastEpisodes}>Podcast · {item.videoDetails.author}</ThemedText>
+                </ThemedView>
+              </TouchableOpacity>
+            )}
+            estimatedItemSize={100}
+            contentContainerStyle={styles.listContentContainer}
+          />
+        </>
       )}
-    </ScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  fullScreenContainer: {
     flex: 1,
+  },
+  searchBarContainer: {
     padding: 16,
   },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
+  topResultsTitle: {
+    fontSize: 18,
+    marginBottom: 10,
+    paddingHorizontal: 16,
+  },
+  listContentContainer: {
+    paddingHorizontal: 16,
+  },
+  podcastItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  podcastImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  podcastDetails: {
+    flex: 1,
+  },
+  podcastEpisodes: {
+    fontSize: 12,
+    color: 'gray',
   },
   loader: {
-    marginTop: 16,
-  },
-  response: {
     marginTop: 16,
   },
 });

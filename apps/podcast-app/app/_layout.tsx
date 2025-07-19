@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import AppBar from '@/components/AppBar';
 import { QueryClientProvider, queryClient } from '@/hooks/useQuery';
 
 export default function RootLayout() {
@@ -23,10 +24,10 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="details" />
+          <Stack.Screen name="details" options={{ header: () => <AppBar title="Details" /> }} />
           <Stack.Screen name="settings" options={{ headerShown: false }} />
           <Stack.Screen name="podcast" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
+          <Stack.Screen name="+not-found" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>

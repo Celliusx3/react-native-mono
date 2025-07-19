@@ -22,6 +22,13 @@ type YouTubePlayerResponse = {
   videoDetails: {
     title: string;
     author: string;
+    thumbnail: {
+      thumbnails: {
+        url: string,
+        width: number, 
+        height: number,
+      }[];
+    }
   };
 };
 
@@ -49,7 +56,6 @@ const fetchYouTubePlayer = async (
   }
 
   const jsonResponse = await response.json();
-  console.log(JSON.stringify(jsonResponse, null, 2));
   return jsonResponse;
 };
 
@@ -71,8 +77,8 @@ export const useYoutube = (videoId: string) => {
     // The query function now calls the fetcher with the payload
     queryFn: () => fetchYouTubePlayer(finalPayload),
 
-    // Important: This ensures the query only runs when a videoId is provided.
-    enabled: !!videoId,
+    // The query is now disabled by default and must be triggered manually.
+    enabled: false,
 
     // The data will be considered fresh for 24 hours.
     staleTime: 1000 * 60 * 60 * 24, // 24 hours in milliseconds
