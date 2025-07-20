@@ -1,3 +1,4 @@
+import { Slider } from 'tamagui';
 import { PlaybackSpeedBottomSheet } from '@/components/PlaybackSpeedBottomSheet';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -23,6 +24,8 @@ export default function PodcastScreen() {
   const [duration, setDuration] = useState(0);
   const [isSheetOpen, setSheetOpen] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [isSeeking, setIsSeeking] = useState(false);
+  const [seekingValue, setSeekingValue] = useState(0);
 
   const handleSpeedChange = (speed: number) => {
     player.playbackRate = speed;
@@ -32,7 +35,7 @@ export default function PodcastScreen() {
 
   useEventListener(player, 'sourceLoad', ({ duration }) => {
     console.log("Duration", duration);
-    setDuration(duration);
+    setDuration(Math.floor(duration));
   });
 
   useEventListener(player, 'playingChange', ({ isPlaying }) => {
@@ -41,7 +44,7 @@ export default function PodcastScreen() {
 
   useEventListener(player, 'timeUpdate', ({ currentTime}) => {
     console.log("Current time", currentTime)
-    setPosition(currentTime);
+    setPosition(Math.floor(currentTime));
   });
 
   const handlePlayPause = () => {
@@ -87,6 +90,29 @@ export default function PodcastScreen() {
         <TouchableOpacity onPress={handleSkipForward}>
           <Ionicons name="play-forward-sharp" size={36} color="black" />
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.sliderContainer}>
+        <Slider
+          size="$1"
+          width="100%"
+          max={duration}
+          step={1}
+          value={[isSeeking ? seekingValue : position]}
+          onValueChange={(value) => {
+            setIsSeeking(true);
+            setSeekingValue(value[0]);
+          }}
+          onSlideEnd={(event, value) => {
+            setIsSeeking(false);
+            player.currentTime = value;
+          }}
+        >
+          <Slider.Track>
+            <Slider.TrackActive />
+          </Slider.Track>
+          <Slider.Thumb circular index={0} />
+        </Slider>
       </View>
 
       <View style={styles.timeContainer}>
@@ -149,6 +175,10 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  sliderContainer: {
+    width: '90%',
+    marginBottom: 10,
   },
   
   timeContainer: {
