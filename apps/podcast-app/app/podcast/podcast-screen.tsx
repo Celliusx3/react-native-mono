@@ -1,3 +1,4 @@
+import { Slider } from 'tamagui';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
@@ -21,8 +22,8 @@ export default function PodcastScreen() {
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
 
-
   useEventListener(player, 'sourceLoad', ({ duration }) => {
+    console.log("Duration", duration);
     setDuration(duration);
   });
 
@@ -31,6 +32,7 @@ export default function PodcastScreen() {
   });
 
   useEventListener(player, 'timeUpdate', ({ currentTime}) => {
+    console.log("Current time", currentTime)
     setPosition(currentTime);
   });
 
@@ -48,6 +50,14 @@ export default function PodcastScreen() {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
+  const handleSkipBackward = () => {
+    player.currentTime = Math.max(0, position - 10);
+  };
+
+  const handleSkipForward = () => {
+    player.currentTime = Math.min(duration, position + 10);
+  };
+
   return (
     <ThemedView style={styles.container}>
       <View style={styles.artworkContainer}>
@@ -60,19 +70,51 @@ export default function PodcastScreen() {
       <ThemedText style={styles.podcastArtist}>{parsedVideoDetails.videoDetails.author}</ThemedText>
 
       <View style={styles.controlsContainer}>
-        <Ionicons name="play-back-sharp" size={36} color="black" />
-        <Ionicons name="play-skip-back-sharp" size={36} color="black" />
+        <TouchableOpacity onPress={handleSkipBackward}>
+          <Ionicons name="play-back-sharp" size={36} color="black" />
+        </TouchableOpacity>
         <TouchableOpacity style={styles.playButton} onPress={handlePlayPause}>
           <Ionicons name={isPlaying ? "pause" : "play"} size={36} color="white" />
         </TouchableOpacity>
-        <Ionicons name="play-skip-forward-sharp" size={36} color="black" />
-        <Ionicons name="play-forward-sharp" size={36} color="black" />
+        <TouchableOpacity onPress={handleSkipForward}>
+          <Ionicons name="play-forward-sharp" size={36} color="black" />
+        </TouchableOpacity>
       </View>
+      {/* <Slider 
+        size="$1" 
+        width="100%" 
+        max={100} 
+        step={1}
+        value={[duration === 0 ? 0 : Math.round((position / duration) * 100)]}
+        onValueChange={(value) => {
+          // if (duration > 0) {
+          //   console.log(Math.floor((value[0] / 100) * duration));
+          //   player.seekBy(Math.floor((value[0] / 100) * duration));
+          // }
+        }}
+      >
+        <Slider.Track>
+          <Slider.TrackActive />
+        </Slider.Track>
+        <Slider.Thumb circular index={0} />
+      </Slider> */}
 
-      <View style={styles.progressBarContainer}>
-        <View style={[styles.progressBar, { width: `${(position / duration) * 100}%` }]} />
-        <View style={styles.progressRemaining} />
-      </View>
+      {/* <Slider
+        width = "100%"
+        defaultValue={[currentTime]}
+        value={[currentTime]}
+        min={0}
+        max={duration}
+        step={1}
+        onValueChange={handleSeek}
+        size="$1"
+      >
+        <Slider.Track>
+          <Slider.TrackActive />
+        </Slider.Track>
+        <Slider.Thumb index={0} circular elevate />
+      </Slider> */}
+
       <View style={styles.timeContainer}>
         <ThemedText>{formatTime(position)}</ThemedText>
         <ThemedText>{formatTime(duration)}</ThemedText>
@@ -81,15 +123,6 @@ export default function PodcastScreen() {
       <View style={styles.actionButtonsContainer}>
         <TouchableOpacity style={styles.actionButton}>
           <ThemedText>1x</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <ThemedText>Sleep Timer</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <ThemedText>15</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <ThemedText>30</ThemedText>
         </TouchableOpacity>
       </View>
     </ThemedView>
@@ -136,24 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  progressBarContainer: {
-    flexDirection: 'row',
-    width: '90%',
-    height: 4,
-    backgroundColor: '#ccc',
-    borderRadius: 2,
-    marginBottom: 10,
-  },
-  progressBar: {
-    width: '50%', // Example progress
-    height: '100%',
-    backgroundColor: 'blue',
-    borderRadius: 2,
-  },
-  progressRemaining: {
-    flex: 1,
-    backgroundColor: '#eee',
-  },
+  
   timeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -162,9 +178,7 @@ const styles = StyleSheet.create({
   },
   actionButtonsContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    width: '100%',
+    justifyContent: 'center',
   },
   actionButton: {
     borderWidth: 1,
@@ -175,3 +189,4 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
+
