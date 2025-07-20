@@ -2271,7 +2271,7 @@
     "@tamagui/start-transition" "1.132.10"
     "@tamagui/use-controllable-state" "1.132.10"
 
-"@tamagui/portal@1.132.10":
+"@tamagui/portal@1.132.10", "@tamagui/portal@^1.132.10":
   version "1.132.10"
   resolved "https://registry.yarnpkg.com/@tamagui/portal/-/portal-1.132.10.tgz#257228fb5fe42537d1bccc3135f5f8833a021d77"
   integrity sha512-V61+n/gHdSFpOC96/NHoLoo9yK0FrU+QTZ4fXXnySIzAINhIFhb97mIZTp7QaQrSDyaq0B7Rpn3eV0f7ECqQjg==

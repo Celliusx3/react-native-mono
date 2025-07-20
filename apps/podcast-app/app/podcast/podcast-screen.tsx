@@ -1,13 +1,13 @@
-import { Slider } from 'tamagui';
+import { PlaybackSpeedBottomSheet } from '@/components/PlaybackSpeedBottomSheet';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useEventListener } from 'expo';
 import { Image } from 'expo-image';
+import { useLocalSearchParams } from 'expo-router';
 import { useVideoPlayer } from 'expo-video';
 import React, { useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function PodcastScreen() {
   const { videoDetails } = useLocalSearchParams();
@@ -21,6 +21,14 @@ export default function PodcastScreen() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isSheetOpen, setSheetOpen] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+
+  const handleSpeedChange = (speed: number) => {
+    player.playbackRate = speed;
+    setPlaybackSpeed(speed);
+    setSheetOpen(false);
+  };
 
   useEventListener(player, 'sourceLoad', ({ duration }) => {
     console.log("Duration", duration);
@@ -80,40 +88,6 @@ export default function PodcastScreen() {
           <Ionicons name="play-forward-sharp" size={36} color="black" />
         </TouchableOpacity>
       </View>
-      {/* <Slider 
-        size="$1" 
-        width="100%" 
-        max={100} 
-        step={1}
-        value={[duration === 0 ? 0 : Math.round((position / duration) * 100)]}
-        onValueChange={(value) => {
-          // if (duration > 0) {
-          //   console.log(Math.floor((value[0] / 100) * duration));
-          //   player.seekBy(Math.floor((value[0] / 100) * duration));
-          // }
-        }}
-      >
-        <Slider.Track>
-          <Slider.TrackActive />
-        </Slider.Track>
-        <Slider.Thumb circular index={0} />
-      </Slider> */}
-
-      {/* <Slider
-        width = "100%"
-        defaultValue={[currentTime]}
-        value={[currentTime]}
-        min={0}
-        max={duration}
-        step={1}
-        onValueChange={handleSeek}
-        size="$1"
-      >
-        <Slider.Track>
-          <Slider.TrackActive />
-        </Slider.Track>
-        <Slider.Thumb index={0} circular elevate />
-      </Slider> */}
 
       <View style={styles.timeContainer}>
         <ThemedText>{formatTime(position)}</ThemedText>
@@ -121,10 +95,17 @@ export default function PodcastScreen() {
       </View>
 
       <View style={styles.actionButtonsContainer}>
-        <TouchableOpacity style={styles.actionButton}>
-          <ThemedText>1x</ThemedText>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setSheetOpen(true)}>
+          <ThemedText>{playbackSpeed}x</ThemedText>
         </TouchableOpacity>
       </View>
+
+      <PlaybackSpeedBottomSheet
+        isOpen={isSheetOpen}
+        onClose={() => setSheetOpen(false)}
+        onSpeedChange={handleSpeedChange}
+        currentSpeed={playbackSpeed}
+      />
     </ThemedView>
   );
 }
@@ -189,4 +170,3 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
-
