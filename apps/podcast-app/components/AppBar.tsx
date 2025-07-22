@@ -5,6 +5,7 @@ import { ThemedView } from './ThemedView';
 import { IconSymbol } from './ui/IconSymbol';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useNavigation } from 'expo-router';
+import { H4 } from 'tamagui';
 
 interface AppBarProps {
   title: string;
@@ -23,9 +24,7 @@ export default function AppBar({ title }: AppBarProps) {
           </TouchableOpacity>
         )}
       </View>
-      <ThemedText type="subtitle" style={styles.title}>
-        {title}
-      </ThemedText>
+      <H4>{title}</H4>
       <View style={styles.rightContainer} />
     </ThemedView>
   );
