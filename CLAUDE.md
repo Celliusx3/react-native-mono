@@ -34,11 +34,10 @@ react-native-mono/
 - **Tamagui**: ^1.132.15 - Primary design system and component library
 - **Design System**: Follows Tailwind CSS v4 principles with theme variables and design tokens
 - **Custom Font System**: Noto Sans with Tailwind-inspired semantic variants (body, heading, caption, mono)
-- **Theme System**: Light/dark mode support with React Navigation themes and CSS custom properties
+- **Theme System**: Light/dark mode support with Tamagui themes and CSS custom properties
 
 ### Navigation & Routing
-- **Expo Router**: ~5.1.3 - File-based routing system
-- **React Navigation**: Bottom tabs and native navigation patterns
+- **Expo Router**: ~5.1.3 - File-based routing system with built-in navigation components
 
 ### State Management
 - **Zustand**: ^5.0.6 - Lightweight state management
@@ -73,7 +72,8 @@ Navigate to `apps/podcast-app/` before running these commands:
 - Follow Tailwind v4 design token approach with semantic naming
 - Leverage semantic font variants: `body`, `heading`, `caption`, `mono`
 - Apply Tailwind-inspired utility classes through Tamagui props
-- Follow Expo Router file-based routing conventions
+- Follow Expo Router file-based routing conventions (no React Navigation)
+- Use Expo Router's built-in navigation hooks (`useNavigation`, `useRouter`, `useLocalSearchParams`)
 - Implement proper TypeScript interfaces for all props
 
 ### State Management Patterns
@@ -146,7 +146,8 @@ space-8  -> $8      -> 32px
 ## Key Files
 
 ### Configuration
-- `app/_layout.tsx` - Root layout with Tailwind-inspired theme configuration
+- `app/_layout.tsx` - Root layout with Tailwind-inspired theme configuration (Expo Router only)
+- `app/(tabs)/_layout.tsx` - Tab navigation layout using Expo Router's Tabs component
 - `tsconfig.json` - TypeScript configuration with strict mode
 - `eslint.config.js` - ESLint configuration using Expo preset
 

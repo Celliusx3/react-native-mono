@@ -1,4 +1,3 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { TamaguiProvider, createTamagui, createFont, Theme } from '@tamagui/core';
 import { PortalProvider } from '@tamagui/portal';
 import { config as defaultConfig } from '@tamagui/config';
@@ -239,16 +238,14 @@ export default function RootLayout() {
         <TamaguiProvider config={config}>
           <PortalProvider>
             <Theme name={colorScheme}>
-              <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  <Stack.Screen name="details" options={{ header: () => <AppBar title="Details" /> }} />
-                  <Stack.Screen name="settings" options={{ headerShown: false }} />
-                  <Stack.Screen name="podcast" options={{ headerShown: false }} />
-                  <Stack.Screen name="+not-found" options={{ headerShown: false }} />
-                </Stack>
-                <StatusBar style="auto" />
-              </ThemeProvider>
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="details" options={{ header: () => <AppBar title="Details" /> }} />
+                <Stack.Screen name="settings" options={{ headerShown: false }} />
+                <Stack.Screen name="podcast" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" options={{ headerShown: false }} />
+              </Stack>
+              <StatusBar style="auto" />
             </Theme>
           </PortalProvider>
         </TamaguiProvider>
