@@ -1,7 +1,7 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { TamaguiProvider, createTamagui, createFont } from '@tamagui/core';
+import { TamaguiProvider, createTamagui, createFont, Theme } from '@tamagui/core';
 import { PortalProvider } from '@tamagui/portal';
-import { defaultConfig } from '@tamagui/config/v4';
+import { config as defaultConfig } from '@tamagui/config';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -238,16 +238,18 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={config}>
           <PortalProvider>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="details" options={{ header: () => <AppBar title="Details" /> }} />
-                <Stack.Screen name="settings" options={{ headerShown: false }} />
-                <Stack.Screen name="podcast" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" options={{ headerShown: false }} />
-              </Stack>
-              <StatusBar style="auto" />
-            </ThemeProvider>
+            <Theme name={colorScheme}>
+              <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                <Stack>
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen name="details" options={{ header: () => <AppBar title="Details" /> }} />
+                  <Stack.Screen name="settings" options={{ headerShown: false }} />
+                  <Stack.Screen name="podcast" options={{ headerShown: false }} />
+                  <Stack.Screen name="+not-found" options={{ headerShown: false }} />
+                </Stack>
+                <StatusBar style="auto" />
+              </ThemeProvider>
+            </Theme>
           </PortalProvider>
         </TamaguiProvider>
     </QueryClientProvider>
