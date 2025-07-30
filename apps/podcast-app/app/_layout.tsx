@@ -294,13 +294,6 @@ export default function RootLayout() {
                   }} 
                 />
                 <Stack.Screen 
-                  name="settings" 
-                  options={{ 
-                    headerShown: false,
-                    contentStyle: { backgroundColor },
-                  }} 
-                />
-                <Stack.Screen 
                   name="podcast" 
                   options={{ 
                     headerShown: false,

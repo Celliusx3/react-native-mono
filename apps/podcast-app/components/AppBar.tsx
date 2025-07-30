@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, Platform, View } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
-import { IconSymbol } from './ui/IconSymbol';
+import { ChevronLeft } from '@tamagui/lucide-icons';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { useNavigation } from 'expo-router';
 import { H4 } from 'tamagui';
@@ -22,7 +22,7 @@ export default function AppBar({ title }: AppBarProps) {
       <View style={styles.leftContainer}>
         {navigation.canGoBack() && (
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <IconSymbol name="chevron.left" size={24} color={iconColor} />
+            <ChevronLeft size={24} color={iconColor} />
           </TouchableOpacity>
         )}
       </View>

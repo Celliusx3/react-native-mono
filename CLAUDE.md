@@ -32,6 +32,7 @@ react-native-mono/
 
 ### UI & Styling
 - **Tamagui**: ^1.132.15 - Primary design system and component library
+- **Lucide Icons**: ^1.132.15 - Consistent icon system via `@tamagui/lucide-icons`
 - **Design System**: Follows Tailwind CSS v4 principles with theme variables and design tokens
 - **Custom Font System**: Noto Sans with Tailwind-inspired semantic variants (body, heading, caption, mono)
 - **Theme System**: Light/dark mode support with Tamagui themes and CSS custom properties
@@ -142,6 +143,45 @@ space-4  -> $4      -> 16px
 space-6  -> $6      -> 24px
 space-8  -> $8      -> 32px
 ```
+
+### Icon System (Lucide Icons)
+The application uses Lucide icons via `@tamagui/lucide-icons` for consistent, cross-platform iconography.
+
+**Import Pattern:**
+```typescript
+import { Home, Settings, Search, ChevronLeft } from '@tamagui/lucide-icons';
+```
+
+**Usage Examples:**
+```typescript
+// Tab bar icons (standard size: 28px)
+<Home size={28} color={color} />
+<Settings size={28} color={color} />
+
+// Navigation and UI icons (standard size: 24px)
+<ChevronLeft size={24} color={iconColor} />
+<Search size={20} color={iconColor} />
+
+// Small utility icons (standard size: 16px)
+<X size={16} color={iconColor} />
+```
+
+**Common Icon Mappings:**
+- `Home` - Tab navigation, dashboard
+- `Settings` - Configuration, preferences
+- `Search` - Search functionality
+- `ChevronLeft` - Back navigation
+- `Info` - Information, details
+- `Mic` - Podcast, audio recording
+- `X` - Close, clear, cancel
+- `Sun/Moon` - Theme switching
+- `Check` - Confirmation, selection
+
+**Best Practices:**
+- Use consistent sizing: 28px for tab bars, 24px for navigation, 20px for input fields, 16px for utility actions
+- Always pass the theme-appropriate color from `useThemeColors()` hook
+- Import only the icons you need to optimize bundle size
+- Prefer semantic icon names that clearly convey functionality
 
 ## Key Files
 

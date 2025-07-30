@@ -1,5 +1,5 @@
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useThemeColors } from '@/hooks/useThemeColors';
+import { Search, X } from '@tamagui/lucide-icons';
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, TouchableOpacity, Text, NativeSyntheticEvent, TextInputSubmitEditingEventData } from 'react-native';
 
@@ -30,7 +30,7 @@ export default function SearchBar({ placeholder = "Search", value, onChangeText,
   return (
     <View style={styles.container}>
       <View style={styles.searchBarContainer}>
-        <IconSymbol name="magnifyingglass" size={20} color={iconColor} style={styles.searchIcon} />
+        <Search size={20} color={iconColor} style={styles.searchIcon} />
         <TextInput
           style={styles.searchInput}
           placeholder={placeholder}
@@ -44,7 +44,7 @@ export default function SearchBar({ placeholder = "Search", value, onChangeText,
         />
         {value.length > 0 && (
           <TouchableOpacity onPress={handleClear} style={styles.clearButton}>
-            <IconSymbol name="x.circle.fill" size={16} color={iconColor} />
+            <X size={16} color={iconColor} />
           </TouchableOpacity>
         )}
       </View>
