@@ -1,9 +1,9 @@
-import TabBarBackground from '@/components/ui/TabBarBackground';
+import { BlurView } from 'expo-blur';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { Home, Settings } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export default function TabLayout() {
   const colors = useThemeColors();
@@ -15,18 +15,11 @@ export default function TabLayout() {
         tabBarActiveTintColor: colors.tint,
         tabBarInactiveTintColor: colors.tabIconDefault,
         headerShown: false,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {
-            backgroundColor: colors.background,
-            borderTopColor: colors.tabIconDefault,
-          },
-        }),
-        sceneStyle: { backgroundColor },
+        tabBarStyle: {
+          backgroundColor: colors.background,
+          borderTopColor: colors.tabIconDefault,
+          borderTopWidth: StyleSheet.hairlineWidth,
+        },
       }}>
       <Tabs.Screen
         name="index"
