@@ -1,7 +1,7 @@
 import { Text, SizableText } from 'tamagui';
 import { type TextProps as RNTextProps } from 'react-native';
 
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export type ThemedTextProps = RNTextProps & {
   lightColor?: string;
@@ -20,7 +20,8 @@ export function ThemedText({
   weight,
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const colors = useThemeColors();
+  const color = colors.getColor('text', { light: lightColor, dark: darkColor });
 
   // Determine font family based on variant
   const getFontFamily = () => {

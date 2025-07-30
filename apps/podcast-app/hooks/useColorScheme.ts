@@ -13,6 +13,13 @@ export function useColorScheme() {
     }
   }, [nativeColorScheme, isSystemTheme, setResolvedTheme]);
 
+  // Initialize with system theme if it's the first time and we're on system
+  useEffect(() => {
+    if (isSystemTheme && nativeColorScheme && !resolvedTheme) {
+      setResolvedTheme(nativeColorScheme);
+    }
+  }, [isSystemTheme, nativeColorScheme, resolvedTheme, setResolvedTheme]);
+
   // Return the resolved theme (what should actually be displayed)
-  return resolvedTheme;
+  return resolvedTheme || nativeColorScheme || 'light';
 }

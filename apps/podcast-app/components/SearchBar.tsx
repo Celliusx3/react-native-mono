@@ -1,5 +1,5 @@
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, TouchableOpacity, Text, NativeSyntheticEvent, TextInputSubmitEditingEventData } from 'react-native';
 
@@ -12,7 +12,8 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ placeholder = "Search", value, onChangeText, onSearch, onClear }: SearchBarProps) {
-  const iconColor = useThemeColor({}, 'icon');
+  const colors = useThemeColors();
+  const iconColor = colors.icon;
   const [isFocused, setIsFocused] = useState(false);
 
   const handleClear = () => {

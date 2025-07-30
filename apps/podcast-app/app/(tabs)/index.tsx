@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,18 +16,23 @@ const DATA = [
 ];
 
 export default function HomeScreen() {
-  const iconColor = useThemeColor({}, 'icon');
+  const colors = useThemeColors();
+  const iconColor = colors.icon;
+  const itemBackgroundColor = colors.getColor('background', { light: '#f9f9f9', dark: '#2a2a2a' });
   const router = useRouter();
 
   const renderItem = ({ item }: { item: typeof DATA[0] }) => (
-    <TouchableOpacity style={styles.item} onPress={() => router.push(item.path)}>
+    <TouchableOpacity 
+      style={[styles.item, { backgroundColor: itemBackgroundColor }]} 
+      onPress={() => router.push(item.path)}
+    >
       <IconSymbol name={item.icon as any} size={40} color={iconColor} />
       <ThemedText style={styles.title}>{item.title}</ThemedText>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ThemedView style={styles.container}>
       <FlashList
         data={DATA}
         renderItem={renderItem}
@@ -35,7 +41,7 @@ export default function HomeScreen() {
         estimatedItemSize={150}
         contentContainerStyle={styles.grid}
       />
-    </SafeAreaView>
+    </ThemedView>
   );
 }
 
@@ -48,7 +54,6 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   item: {
-    backgroundColor: '#f9f9f9',
     padding: 20,
     margin: 8,
     alignItems: 'center',

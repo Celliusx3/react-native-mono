@@ -4,9 +4,12 @@ import { config as defaultConfig } from '@tamagui/config';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { View } from 'react-native';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useThemeColors } from '@/hooks/useThemeColors';
+import { Colors } from '@/constants/Colors';
 import AppBar from '@/components/AppBar';
 import { QueryClientProvider, queryClient } from '@/hooks/useQuery';
 
@@ -208,6 +211,26 @@ const config = createTamagui({
     // Legacy compatibility
     default: bodyFont,       // Fallback
   },
+  themes: {
+    ...defaultConfig.themes,
+    // Ensure proper light/dark theme mapping
+    light: {
+      ...defaultConfig.themes.light,
+      background: Colors.light.background,
+      color: Colors.light.text,
+      colorHover: Colors.light.text,
+      colorPress: Colors.light.text,
+      colorFocus: Colors.light.text,
+    },
+    dark: {
+      ...defaultConfig.themes.dark,
+      background: Colors.dark.background,
+      color: Colors.dark.text,
+      colorHover: Colors.dark.text,
+      colorPress: Colors.dark.text,
+      colorFocus: Colors.dark.text,
+    },
+  },
 });
 type Conf = typeof config
 declare module '@tamagui/core' {
@@ -216,6 +239,9 @@ declare module '@tamagui/core' {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const colors = useThemeColors();
+  const backgroundColor = colors.background;
+  
   const [loaded] = useFonts({
     'NotoSans-Thin': require('../assets/fonts/NotoSans-Thin.ttf'),
     'NotoSans-ExtraLight': require('../assets/fonts/NotoSans-ExtraLight.ttf'),
@@ -234,21 +260,66 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <View style={{ flex: 1, backgroundColor }}>
+      <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={config}>
           <PortalProvider>
             <Theme name={colorScheme}>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="details" options={{ header: () => <AppBar title="Details" /> }} />
-                <Stack.Screen name="settings" options={{ headerShown: false }} />
-                <Stack.Screen name="podcast" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" options={{ headerShown: false }} />
+              <Stack
+                screenOptions={{
+                  contentStyle: { backgroundColor },
+                  headerStyle: { backgroundColor },
+                  headerTintColor: colors.text,
+                  animation: 'slide_from_right',
+                  gestureEnabled: true,
+                  gestureResponseDistance: {
+                    horizontal: 200,
+                    vertical: 200,
+                  },
+                  cardStyle: { backgroundColor },
+                }}
+              >
+                <Stack.Screen 
+                  name="(tabs)" 
+                  options={{ 
+                    headerShown: false,
+                    contentStyle: { backgroundColor },
+                  }} 
+                />
+                <Stack.Screen 
+                  name="details" 
+                  options={{ 
+                    header: () => <AppBar title="Details" />,
+                    contentStyle: { backgroundColor },
+                  }} 
+                />
+                <Stack.Screen 
+                  name="settings" 
+                  options={{ 
+                    headerShown: false,
+                    contentStyle: { backgroundColor },
+                  }} 
+                />
+                <Stack.Screen 
+                  name="podcast" 
+                  options={{ 
+                    headerShown: false,
+                    contentStyle: { backgroundColor },
+                  }} 
+                />
+                <Stack.Screen 
+                  name="+not-found" 
+                  options={{ 
+                    headerShown: false,
+                    contentStyle: { backgroundColor },
+                  }} 
+                />
               </Stack>
-              <StatusBar style="auto" />
+              <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
             </Theme>
           </PortalProvider>
         </TamaguiProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </View>
   );
 }

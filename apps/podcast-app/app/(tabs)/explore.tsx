@@ -24,13 +24,13 @@ export default function TabTwoScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">Explore Podcasts</ThemedText>
+      <ThemedText variant="heading">Explore Podcasts</ThemedText>
       <FlatList
         data={data}
         keyExtractor={(item) => item.collectionId.toString()}
         renderItem={({ item }) => (
           <ThemedView style={styles.item}>
-            <ThemedText type="defaultSemiBold">{item.collectionName}</ThemedText>
+            <ThemedText variant="body" weight="semibold">{item.collectionName}</ThemedText>
             <ThemedText>{item.artistName}</ThemedText>
           </ThemedView>
         )}
@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
   item: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: 'rgba(128, 128, 128, 0.3)',
   },
 });
