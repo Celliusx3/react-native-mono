@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { YStack, XStack, Button, Text, Card, Separator, RadioGroup, Label } from 'tamagui';
 import { Circle } from '@tamagui/shapes';
-import { Check, Sun, Moon, Smartphone } from '@tamagui/lucide-icons';
+import { Check, Sun, Moon } from '@tamagui/lucide-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeStore, type ColorScheme } from '@/stores/useThemeStore';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -114,12 +114,6 @@ export default function SettingsScreen() {
     description: string;
     icon: React.ReactNode;
   }> = [
-    {
-      value: 'system',
-      label: 'System',
-      description: 'Follow your device settings automatically',
-      icon: <Smartphone />,
-    },
     {
       value: 'light',
       label: 'Light',
