@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ThemedSafeAreaView } from '@/components/ui';
 import SearchBar from '@/components/SearchBar';
 import { useYoutube } from '@/hooks/useYoutube';
 import { useState } from 'react';
@@ -19,7 +20,7 @@ export default function PodcastScreen() {
   };
 
   return (
-    <ThemedView style={styles.fullScreenContainer}>
+    <ThemedSafeAreaView edges="bottom">
       <View style={styles.searchBarContainer}>
         <SearchBar
           placeholder="Find podcasts (enter YouTube ID)"
@@ -55,14 +56,11 @@ export default function PodcastScreen() {
           />
         </>
       )}
-    </ThemedView>
+    </ThemedSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  fullScreenContainer: {
-    flex: 1,
-  },
   searchBarContainer: {
     padding: 16,
   },

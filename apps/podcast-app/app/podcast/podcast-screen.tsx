@@ -1,7 +1,7 @@
 import { Slider } from 'tamagui';
 import { PlaybackSpeedBottomSheet } from '@/components/PlaybackSpeedBottomSheet';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedSafeAreaView } from '@/components/ui';
 import { Ionicons } from '@expo/vector-icons';
 import { useEventListener } from 'expo';
 import { Image } from 'expo-image';
@@ -70,7 +70,9 @@ export default function PodcastScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedSafeAreaView 
+      alignItems="center"
+    >
       <View style={styles.artworkContainer}>
         <Image
           source={{ uri: parsedVideoDetails.videoDetails.thumbnail.thumbnails[0].url }}
@@ -132,16 +134,11 @@ export default function PodcastScreen() {
         onSpeedChange={handleSpeedChange}
         currentSpeed={playbackSpeed}
       />
-    </ThemedView>
+    </ThemedSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 16,
-  },
   artworkContainer: {
     marginVertical: 30,
   },

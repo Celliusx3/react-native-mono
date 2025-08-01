@@ -1,10 +1,10 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ThemedSafeAreaView } from '@/components/ui';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { Home, Info, Settings, Mic } from '@tamagui/lucide-icons';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
 const DATA = [
@@ -34,7 +34,9 @@ export default function HomeScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedSafeAreaView 
+      edges="top"
+    >
       <FlashList
         data={DATA}
         renderItem={renderItem}
@@ -43,15 +45,11 @@ export default function HomeScreen() {
         estimatedItemSize={150}
         contentContainerStyle={styles.grid}
       />
-    </ThemedView>
+    </ThemedSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
   grid: {
     padding: 4,
   },

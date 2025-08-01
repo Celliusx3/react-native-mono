@@ -1,19 +1,13 @@
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { StyleSheet } from 'react-native';
+import { ThemedSafeAreaView } from '@/components/ui';
 
 export default function DetailsScreen() {
   return (
-    <ThemedView style={styles.container}>
+    <ThemedSafeAreaView 
+      alignItems="center"
+      justifyContent="center"
+    >
       <ThemedText type="title">Details Screen</ThemedText>
-    </ThemedView>
+    </ThemedSafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

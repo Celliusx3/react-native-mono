@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import { YStack, XStack, Button, Text, Card, Separator, RadioGroup, Label } from 'tamagui';
 import { Circle } from '@tamagui/shapes';
 import { Check, Sun, Moon } from '@tamagui/lucide-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ThemedSafeAreaView } from '@/components/ui';
 import { useThemeStore, type ColorScheme } from '@/stores/useThemeStore';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -104,7 +104,6 @@ function ThemePreview() {
 }
 
 export default function SettingsScreen() {
-  const insets = useSafeAreaInsets();
   const { colorScheme, setColorScheme, toggleTheme } = useThemeStore();
   const currentTheme = useColorScheme();
 
@@ -129,12 +128,15 @@ export default function SettingsScreen() {
   ];
 
   return (
-    <ScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={{ paddingTop: insets.top + 16 }}
-      showsVerticalScrollIndicator={false}
+    <ThemedSafeAreaView 
+      edges="top"
     >
-      <YStack flex={1} padding="$4" space="$4">
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 16 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <YStack flex={1} space="$4">
         {/* Header */}
         <YStack space="$2">
           <Text fontSize="$8" fontWeight="bold" color="$color">
@@ -222,7 +224,8 @@ export default function SettingsScreen() {
             </YStack>
           </Card>
         </YStack>
-      </YStack>
-    </ScrollView>
+        </YStack>
+      </ScrollView>
+    </ThemedSafeAreaView>
   );
 }

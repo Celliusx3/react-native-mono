@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -260,11 +261,13 @@ export default function RootLayout() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor }}>
-      <QueryClientProvider client={queryClient}>
-        <TamaguiProvider config={config}>
-          <PortalProvider>
-            <Theme name={colorScheme}>
+    <SafeAreaProvider>
+      { /* This is for the background transition view*/ }
+      <View style={{ flex: 1, backgroundColor }}> 
+        <QueryClientProvider client={queryClient}>
+          <TamaguiProvider config={config}>
+            <PortalProvider>
+              <Theme name={colorScheme}>
               <Stack
                 screenOptions={{
                   contentStyle: { backgroundColor },
@@ -309,10 +312,11 @@ export default function RootLayout() {
                 />
               </Stack>
               <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-            </Theme>
-          </PortalProvider>
-        </TamaguiProvider>
-      </QueryClientProvider>
-    </View>
+              </Theme>
+            </PortalProvider>
+          </TamaguiProvider>
+        </QueryClientProvider>
+      </View>
+    </SafeAreaProvider>
   );
 }
