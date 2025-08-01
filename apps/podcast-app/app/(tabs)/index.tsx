@@ -2,14 +2,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedSafeAreaView } from '@/components/ui';
 import { useThemeColors } from '@/hooks/useThemeColors';
-import { Home, Info, Settings, Mic } from '@tamagui/lucide-icons';
+import { Home, Settings, Mic } from '@tamagui/lucide-icons';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useRouter } from 'expo-router';
 
 const DATA = [
   { id: '1', title: 'Home', icon: Home, path: '/' },
-  { id: '3', title: 'Details', icon: Info, path: '/details' },
   { id: '4', title: 'Settings', icon: Settings, path: '/(tabs)/settings' },
   { id: '5', title: 'Podcast', icon: Mic, path: '/podcast' },
 ];
